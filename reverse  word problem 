@@ -1,0 +1,28 @@
+Given a String str, reverse the string without reversing its individual words. Words are separated by dots.
+
+Note: The last character has not been '.'. 
+
+//c++ code 
+
+class Solution {
+  public:
+   
+        string reverseWords(string s) {
+    vector<string> words;
+    string word;
+    stringstream ss(s);
+
+    while (getline(ss, word, '.')) {
+        words.push_back(word);
+    }
+
+    string result = "";
+    for (int i = words.size() - 1; i >= 0; i--) {
+        result += words[i];
+        if (i != 0) result += ".";
+    }
+
+    return result;
+        
+    }
+};
