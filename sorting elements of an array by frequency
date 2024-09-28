@@ -1,0 +1,26 @@
+
+Given an array of integers arr, sort the array according to the frequency of elements, i.e. elements that have higher frequency comes first. If the frequencies of two elements are the same, then the smaller number comes first.
+
+
+// c++ code 
+class Solution {
+  public:
+    static bool func(pair<int,int> &a,pair<int,int> &b){
+        if(a.second>b.second)return true;
+        else if(a.second<b.second)return false;
+        else return a.first<b.first;
+    }
+   
+    vector<int> sortByFreq(vector<int>& arr) {
+        
+        unordered_map<int,int> mm;
+        vector<pair<int,int>> vec;
+        vector<int> ans;
+        for(auto x:arr)mm[x]++;
+        for(auto x:arr)vec.push_back({x,mm[x]});
+        sort(vec.begin(),vec.end(),func);
+        for(auto x:vec)ans.push_back(x.first);
+        return ans;
+    }
+    
+};
