@@ -1,0 +1,27 @@
+Given a number n, Your task is to swap the two nibbles and find the resulting number. 
+
+A nibble is a four-bit aggregation, or half an octet. There are two nibbles in a byte. For example, the decimal number 150 is represented as 10010110 in an 8-bit byte. This byte can be divided into two nibbles: 1001 and 0110.
+
+
+
+
+
+//c++ code 
+class Solution {
+  public:
+  
+int swapNibbles(int n) {
+    return ((n & 0x0F) << 4) | ((n & 0xF0) >> 4);
+}
+
+int main() {
+    int n1 = 100;
+    int n2 = 129;
+
+    swapNibbles(n1); // 70
+    swapNibbles(n2); // 24
+
+    return 0;
+
+    }
+};
