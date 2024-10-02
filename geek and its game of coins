@@ -1,0 +1,24 @@
+
+Given three numbers n, x, and y, Geek and his friend are playing a coin game. In the beginning, there are n coins. In each move, a player can pick x, y, or 1 coin. Geek always starts the game. The player who picks the last coin wins the game. The task is to determine whether Geek will win the game or not if both players play optimally.
+
+
+
+
+// c++ code 
+class Solution {
+  public:
+    
+        int findWinner(int n, int x, int y) {
+    vector<int> dp(n+1, 0);
+    dp[0] = 0;
+
+    for (int i = 1; i <= n; i++) {
+        if (i - 1 >= 0 && dp[i - 1] == 0) dp[i] = 1;
+        else if (i - x >= 0 && dp[i - x] == 0) dp[i] = 1;
+        else if (i - y >= 0 && dp[i - y] == 0) dp[i] = 1;
+    }
+
+    return dp[n];
+
+    }
+};
