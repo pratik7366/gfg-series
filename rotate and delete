@@ -1,0 +1,23 @@
+Given an array arr integers. Assume sz to be the initial size of the array. Do the following operations exactly sz/2 times. In every kth (1<= k <= sz/2) operation:
+
+Right-rotate the array clockwise by 1.
+Delete the (n– k + 1)th element from begin.
+Now, Return the first element of the array.
+Note: Here n keeps on decreasing with every operation.
+
+
+
+
+
+// c++ code 
+class Solution {
+  public:
+    int rotateDelete(vector<int> &arr) {
+        
+        int n = arr.size(), temp = n/2;
+        int i = 3*(temp/2);
+        if(temp%2)i++;
+        return arr[n-i];
+    
+    }
+};
