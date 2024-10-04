@@ -1,0 +1,56 @@
+
+Given a Circular Linked List. The task is to delete the given node, key in the circular linked list, and reverse the circular linked list.
+
+
+
+// c++ code 
+class Solution {
+  public:
+    // Function to reverse a circular linked list
+    Node* reverse(Node* head) {
+        
+    if (!head || head->next == head) return head;
+    
+    Node *prev = nullptr, *curr = head, *next = nullptr;
+    Node* last = head;
+    
+    do {
+        next = curr->next;
+        curr->next = prev;
+        prev = curr;
+        curr = next;
+    } while (curr != head);
+    
+    last->next = prev;
+    return prev;
+
+    }
+
+    Node* deleteNode(Node* head, int key) {
+    
+    if (!head) return nullptr;
+    
+    Node *curr = head, *prev = nullptr;
+    
+    do {
+        if (curr->data == key) {
+            if (prev == nullptr) {
+                Node* temp = head;
+                while (temp->next != head) temp = temp->next;
+                temp->next = curr->next;
+                head = (curr->next != curr) ? curr->next : nullptr;
+            } else {
+                prev->next = curr->next;
+            }
+            break;
+        }
+        prev = curr;
+        curr = curr->next;
+    } while (curr != head);
+
+    return head;
+
+
+    }
+};
+
