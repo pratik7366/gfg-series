@@ -1,0 +1,16 @@
+Given a sorted array arr[] of positive integers, find the smallest positive integer such that it cannot be represented as the sum of elements of any subset of the given array set.
+
+//c++ code 
+
+class Solution {
+  public:
+    int findSmallest(vector<int> &arr) {
+        
+    int smallest = 1;
+    for (int i = 0; i < arr.size() && arr[i] <= smallest; ++i) {
+        smallest += arr[i];
+    }
+    return smallest;
+
+    }
+};
