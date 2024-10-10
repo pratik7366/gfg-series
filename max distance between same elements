@@ -1,0 +1,24 @@
+Given an array arr[] with repeated elements, the task is to find the maximum distance between two occurrences of an element.
+
+Note: You may assume that every input array has repetitions.
+
+
+
+// c++ code 
+class Solution {
+  public:
+    int maxDistance(vector<int> &arr) {
+
+    unordered_map<int, int> first_occurrence;
+    int max_dist = 0;
+    for (int i = 0; i < arr.size(); i++) {
+        if (first_occurrence.find(arr[i]) == first_occurrence.end()) {
+            first_occurrence[arr[i]] = i;
+        } else {
+            max_dist = max(max_dist, i - first_occurrence[arr[i]]);
+        }
+    }
+    return max_dist;
+
+    }
+};
