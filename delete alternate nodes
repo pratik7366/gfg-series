@@ -1,0 +1,30 @@
+
+Given a Singly Linked List, Delete all alternate nodes of the list ie delete all the nodes present in even positions.
+
+
+// c++ code 
+class Solution {
+  public:
+    void deleteAlt(struct Node *head) {
+        
+
+    if (!head) return;
+    Node* current = head;
+    while (current && current->next) {
+        Node* temp = current->next;
+        current->next = current->next->next;
+        delete temp;
+        current = current->next;
+    }
+}
+
+void printList(Node* head) {
+    while (head) {
+        cout << head->data << " ";
+        head = head->next;
+    }
+    cout << endl;
+
+
+    }
+};
