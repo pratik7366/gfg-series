@@ -1,0 +1,20 @@
+Given a singly linked list. The task is to find the length of the linked list, where length is defined as the number of nodes in the linked list.
+
+
+
+//c++ code 
+class Solution {
+  public:
+    
+    int getCount(struct Node* head) {
+
+        
+    int count = 0;
+    while (head != nullptr) {
+        count++;
+        head = head->next;
+    }
+    return count;
+
+    }
+};
