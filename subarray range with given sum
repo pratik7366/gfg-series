@@ -1,0 +1,23 @@
+Given an unsorted array of integers arr[], and a target tar, determine the number of subarrays whose elements sum up to the target value.
+
+
+// c++ code 
+class Solution {
+  public:
+     
+    int subArraySum(vector<int>& arr, int tar) {
+        
+    unordered_map<int, int> prefixSumCount;
+    int count = 0, currSum = 0;
+    
+    for (int num : arr) {
+        currSum += num;
+        if (currSum == tar) count++;
+        if (prefixSumCount.find(currSum - tar) != prefixSumCount.end()) {
+            count += prefixSumCount[currSum - tar];
+        }
+        prefixSumCount[currSum]++;
+    }
+    return count;
+    }
+};
