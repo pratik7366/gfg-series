@@ -1,0 +1,12 @@
+Given an array arr[] of positive integers where every element appears even times except for one. Find that number occurring an odd number of times.
+
+// c++ code 
+class Solution {
+  public:
+    int getSingle(vector<int>& arr) {
+      int ans = 0;
+        for(int x:arr)ans^=x;
+        return ans;
+    
+    }
+};
