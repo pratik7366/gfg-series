@@ -1,0 +1,28 @@
+A string str is given to represent a positive number. The task is to round str to the nearest multiple of 10.  If you have two multiples equally apart from str, choose the smallest element among them.
+
+
+
+// c++ code
+class Solution {
+  public:
+    string roundToNearest(string str) {
+
+        int n = str.length()-1;
+        if(str[n]<='5'){
+            str[n]='0';
+            return str;
+        }
+        str[n]='0';
+        n--;
+        while(n>=0 and str[n]=='9'){
+            str[n]='0';
+            n--;
+        }
+        if(n==-1)return '1'+str;
+        str[n]++;
+        return str;
+    
+
+
+    }
+};
