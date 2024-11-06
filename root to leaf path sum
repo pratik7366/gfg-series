@@ -1,0 +1,19 @@
+Given a binary tree, where every node value is a number. Find the sum of all the numbers that are formed from root to leaf paths. The formation of the numbers would be like 10*parent + current (see the examples for more clarification).
+
+
+//c++ code 
+class Solution {
+  public:
+    
+ int help(Node *root,int num){
+        if(!root)return 0;
+        num = num*10+root->data;
+        if(!root->left && !root->right)return num;
+        return help(root->left,num)+help(root->right,num);
+    }
+    int treePathsSum(Node *root) {
+    
+        return help(root,0);
+    
+    }
+};
