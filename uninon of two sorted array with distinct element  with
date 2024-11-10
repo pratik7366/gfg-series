@@ -1,0 +1,25 @@
+Given two sorted arrays a[] and b[], where each array contains distinct elements , the task is to return the elements in the union of the two arrays in sorted order.
+
+Union of two arrays can be defined as the set containing distinct common elements that are present in either of the arrays.
+
+//c++ code 
+class Solution {
+  public:
+   
+        vector<int> findUnion(const vector<int>& a, const vector<int>& b) {
+    vector<int> result;
+    int i = 0, j = 0;
+    while (i < a.size() && j < b.size()) {
+        if (a[i] < b[j]) result.push_back(a[i++]);
+        else if (a[i] > b[j]) result.push_back(b[j++]);
+        else {
+            result.push_back(a[i]);
+            i++;
+            j++;
+        }
+    }
+    while (i < a.size()) result.push_back(a[i++]);
+    while (j < b.size()) result.push_back(b[j++]);
+    return result;
+    }
+};
