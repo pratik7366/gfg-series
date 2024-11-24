@@ -1,0 +1,18 @@
+Given an integer array arr[]. You need to find the maximum sum of a subarray.
+
+
+
+
+//c++ code
+class Solution {
+  public:
+   
+        long long maxSubarraySum(vector<int>& arr) {
+    long long currentSum = 0, maxSum = LLONG_MIN;
+    for (int num : arr) {
+        currentSum = max((long long)num, currentSum + num);
+        maxSum = max(maxSum, currentSum);
+    }
+    return maxSum;
+    }
+};
