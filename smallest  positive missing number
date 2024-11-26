@@ -1,0 +1,44 @@
+You are given an integer array arr[]. Your task is to find the smallest positive number missing from the array.
+
+Note: Positive number starts from 1. The array can have negative integers too.
+
+//c++ code approach 1
+class Solution {
+  public:
+   
+    int missingNumber(vector<int> &arr) {
+         unordered_set<int> numSet;
+    for (int num : arr) {
+        if (num > 0) {
+            numSet.insert(num);
+        }
+    }
+    int smallest = 1;
+    while (numSet.count(smallest)) {
+        smallest++;
+    }
+    return smallest;
+    }
+};
+
+<<<<<<<<<<<<<<<<<-----------//c++ code approach 2--------------------->>>>>>>>>>>>>>>>>>>>>>>>
+
+class Solution {
+  public:
+   
+    int missingNumber(vector<int> &arr) {
+        
+    int n = arr.size();
+    for (int i = 0; i < n; i++) {
+        while (arr[i] > 0 && arr[i] <= n && arr[arr[i] - 1] != arr[i]) {
+            swap(arr[i], arr[arr[i] - 1]);
+        }
+    }
+    for (int i = 0; i < n; i++) {
+        if (arr[i] != i + 1) {
+            return i + 1;
+        }
+    }
+    return n + 1;
+    }
+};
