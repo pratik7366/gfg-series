@@ -1,0 +1,23 @@
+
+Given a string s, the objective is to convert it into integer format without utilizing any built-in functions. Refer the below steps to know about atoi() function.
+//c++ code 
+class Solution {
+  public:
+    int myAtoi(const std::string  &s) {
+         int i = 0, n = s.size();
+    while (i < n && s[i] == ' ') i++;
+    int sign = 1;
+    if (i < n && (s[i] == '+' || s[i] == '-')) {
+        if (s[i] == '-') sign = -1;
+        i++;
+    }
+    long result = 0;
+    while (i < n && s[i] >= '0' && s[i] <= '9') {
+        result = result * 10 + (s[i] - '0');
+        if (result * sign > INT_MAX) return INT_MAX;
+        if (result * sign < INT_MIN) return INT_MIN;
+        i++;
+    }
+    return result * sign;
+    }
+};
