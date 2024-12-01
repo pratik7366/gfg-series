@@ -1,0 +1,21 @@
+Given a string s consisting of lowercase Latin Letters. Return the first non-repeating character in s. If there is no non-repeating character, return '$'.
+Note: When you return '$' driver code will output -1.
+
+
+//c++ code 
+class Solution {
+  public:
+    
+    char nonRepeatingChar(string &s) {
+    unordered_map<char, int> freq;
+    for (char c : s) {
+        freq[c]++;
+    }
+    for (char c : s) {
+        if (freq[c] == 1) {
+            return c;
+        }
+    }
+    return '$';
+    }
+};
