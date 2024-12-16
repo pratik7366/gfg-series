@@ -1,0 +1,26 @@
+Given two sorted arrays a[] and b[] and an element k, the task is to find the element that would be at the kth position of the combined sorted array.
+
+
+//c++ code 
+class Solution {
+  public:
+    int kthElement(vector<int>& a, vector<int>& b, int k) {
+         int i = 0, j = 0, n = a.size(), m = b.size(), ans, c = 0;
+        while (true) {
+            int x1 = (i < n) ? a[i] : INT_MAX;
+            int x2 = (j < m) ? b[j] : INT_MAX;
+            if (x1 < x2) {
+                i++;
+                ans = x1;
+            } else {
+                j++;
+                ans = x2;
+            }
+            c++;
+            if (c == k) {
+                return ans;
+            }
+        }
+    
+    }
+};
