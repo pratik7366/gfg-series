@@ -1,0 +1,22 @@
+Given an array of integers arr[] and a number k, count the number of subarrays having XOR of their elements as k
+
+
+//c++ code 
+
+class Solution {
+  public:
+    long subarrayXor(vector<int> &arr, int k) {
+        
+    unordered_map<int, int> xorMap;
+    long long   count = 0, xorSum = 0;
+
+    for (int num : arr) {
+        xorSum ^= num;
+        if (xorSum == k) count++;
+        if (xorMap.find(xorSum ^ k) != xorMap.end()) count += xorMap[xorSum ^ k];
+        xorMap[xorSum]++;
+    }
+
+    return count;
+    }
+};
