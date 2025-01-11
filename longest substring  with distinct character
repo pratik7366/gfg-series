@@ -1,0 +1,26 @@
+Given a string s, find the length of the longest substring with all distinct characters. 
+
+
+//c++ code 
+
+class Solution {
+  public:
+    int longestUniqueSubstr(string &s) {
+    
+    unordered_set<char> charSet; 
+    int maxLength = 0, left = 0;
+
+    for (int right = 0; right < s.size(); ++right) {
+       
+        while (charSet.find(s[right]) != charSet.end()) {
+            charSet.erase(s[left]);
+            ++left;
+        }
+       
+        charSet.insert(s[right]);
+       
+        maxLength = max(maxLength, right - left + 1);
+    }
+    return maxLength;
+    }
+};
