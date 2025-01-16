@@ -1,0 +1,28 @@
+
+Given an array arr of 0s and 1s. Find and return the length of the longest subarray with equal number of 0s and 1s.
+
+
+//c++ code 
+
+class Solution {
+  public:
+    int maxLen(vector<int> &arr) {
+        
+    unordered_map<int, int> prefixSumMap;
+    int maxLength = 0, prefixSum = 0;
+
+    prefixSumMap[0] = -1;
+
+    for (int i = 0; i < arr.size(); ++i) {
+        prefixSum += (arr[i] == 0) ? -1 : 1;
+
+        if (prefixSumMap.find(prefixSum) != prefixSumMap.end()) {
+            maxLength = max(maxLength, i - prefixSumMap[prefixSum]);
+        } else {
+            prefixSumMap[prefixSum] = i;
+        }
+    }
+
+    return maxLength;
+    }
+};
