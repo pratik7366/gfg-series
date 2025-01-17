@@ -1,0 +1,29 @@
+
+Given an array, arr[] construct a product array, res[] where each element in res[i] is the product of all elements in arr[] except arr[i]. Return this resultant array, res[].
+Note: Each element is res[] lies inside the 32-bit integer range.
+
+
+//c++ code 
+
+class Solution {
+  public:
+    vector<int> productExceptSelf(vector<int>& arr) {
+    
+    int n = arr.size();
+    vector<int> res(n, 1);
+
+    int leftProduct = 1;
+    for (int i = 0; i < n; ++i) {
+        res[i] = leftProduct;
+        leftProduct *= arr[i];
+    }
+
+    int rightProduct = 1;
+    for (int i = n - 1; i >= 0; --i) {
+        res[i] *= rightProduct;
+        rightProduct *= arr[i];
+    }
+
+    return res;
+    }
+};
