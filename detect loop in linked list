@@ -1,0 +1,23 @@
+You are given the head of a singly linked list. Your task is to determine if the linked list contains a loop. A loop exists in a linked list if the next pointer of the last node points to any other node in the list (including itself), rather than being null.
+
+
+
+//c++ code 
+
+class Solution {
+  public:
+   
+    bool detectLoop(Node* head) {
+          if(!head) return false;
+        Node *slow=head;
+        Node *fast=head;
+        
+        while(fast && fast->next){
+            slow=slow->next;
+            fast=fast->next->next;
+            
+            if(slow==fast) return true;
+        }
+        return false;
+    }
+};
