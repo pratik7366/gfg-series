@@ -1,0 +1,51 @@
+Design a data structure that works like a LRU Cache. Here cap denotes the capacity of the cache and Q denotes the number of queries. Query can be of two types:
+
+PUT x y: sets the value of the key x with value y
+GET x: gets the key of x if present else returns -1.
+
+
+//c++ code 
+
+
+class LRUCache {
+private:
+    int capacity; 
+    std::list<std::pair<int, int>> cacheList; 
+    std::unordered_map<int, std::list<std::pair<int, int>>::iterator> cacheMap; // Maps key to the iterator in the list
+
+public:
+   
+    LRUCache(int cap) : capacity(cap) {}
+
+   
+    int get(int key) {
+        if (cacheMap.find(key) == cacheMap.end()) {
+            return -1; 
+        }
+
+       
+        cacheList.splice(cacheList.begin(), cacheList, cacheMap[key]);
+        return cacheMap[key]->second; 
+    }
+
+    
+    void put(int key, int value) {
+        if (cacheMap.find(key) != cacheMap.end()) {
+         
+            cacheList.splice(cacheList.begin(), cacheList, cacheMap[key]);
+            cacheMap[key]->second = value;
+        } else {
+            
+            if (cacheList.size() == capacity) {
+                
+                int lruKey = cacheList.back().first;
+                cacheList.pop_back();
+                cacheMap.erase(lruKey);
+            }
+
+           
+            cacheList.emplace_front(key, value);
+            cacheMap[key] = cacheList.begin();
+        }
+    }
+};
