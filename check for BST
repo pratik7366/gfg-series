@@ -1,0 +1,25 @@
+Given the root of a binary tree. Check whether it is a BST or not.
+Note: We are considering that BSTs can not contain duplicate Nodes.
+A BST is defined as follows:
+
+The left subtree of a node contains only nodes with keys less than the node's key.
+The right subtree of a node contains only nodes with keys greater than the node's key.
+Both the left and right subtrees must also be binary search trees.
+
+
+
+
+//c++ code 
+
+class Solution {
+  public:
+       bool isBSTUtil(Node* root, long long minVal, long long maxVal) {
+    if (!root) return true;
+    if (root->data <= minVal || root->data >= maxVal) return false;
+    return isBSTUtil(root->left, minVal, root->data) && isBSTUtil(root->right, root->data, maxVal);
+}
+
+bool isBST(Node* root) {
+    return isBSTUtil(root, LLONG_MIN, LLONG_MAX);
+    }
+};
