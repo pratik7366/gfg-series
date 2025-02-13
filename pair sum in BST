@@ -1,0 +1,26 @@
+Given a Binary Search Tree(BST) and a target. Check whether there's a pair of Nodes in the BST with value summing up to the target
+
+//c++ code 
+
+class Solution {
+  public:
+          void inorder(Node *root,vector<int>&ans){
+        if(!root) return;
+        inorder(root->left,ans);
+        ans.push_back(root->data);
+        inorder(root->right,ans);
+    }
+    bool findTarget(Node *root, int target) {
+        
+        vector<int>ans;
+        inorder(root,ans);
+        int s=0,e=ans.size()-1;
+        while(s<e){
+            if(ans[s]+ans[e]==target) return true;
+            else if(ans[s]+ans[e]>target) e--;
+            else s++;
+        }
+        return false;
+    }
+    
+};
