@@ -1,0 +1,25 @@
+given an array arr[] of positive integers and an integer k, Your task is to return k largest elements in decreasing order. 
+
+
+
+
+//c++ code 
+
+class Solution {
+  public:
+    vector<int> kLargest(vector<int>& arr, int k) {
+        
+    priority_queue<int, vector<int>, greater<int>> minHeap;
+    for (int num : arr) {
+        minHeap.push(num);
+        if (minHeap.size() > k) minHeap.pop();
+    }
+    vector<int> result;
+    while (!minHeap.empty()) {
+        result.push_back(minHeap.top());
+        minHeap.pop();
+    }
+    reverse(result.begin(), result.end());
+    return result;
+    }
+};
