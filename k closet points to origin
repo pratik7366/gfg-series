@@ -1,0 +1,34 @@
+
+Given an array of points where each point is represented as points[i] = [xi, yi] on the X-Y plane and an integer k, return the k closest points to the origin (0, 0).
+
+The distance between two points on the X-Y plane is the Euclidean distance, defined as: 
+
+sqrt( (x2 - x1)2 + (y2 - y1)2 )
+
+Note: You can return the k closest points in any order, driver code will sort them before printing.
+
+
+
+
+//c++ code 
+
+class Solution {
+  public:
+    vector<vector<int>> kClosest(vector<vector<int>>& points, int k) {
+       
+    auto comp = [](const vector<int>& a, const vector<int>& b) {
+        return (a[0] * a[0] + a[1] * a[1]) < (b[0] * b[0] + b[1] * b[1]);
+    };
+    priority_queue<vector<int>, vector<vector<int>>, decltype(comp)> maxHeap(comp);
+    for (const auto& p : points) {
+        maxHeap.push(p);
+        if (maxHeap.size() > k) maxHeap.pop();
+    }
+    vector<vector<int>> result;
+    while (!maxHeap.empty()) {
+        result.push_back(maxHeap.top());
+        maxHeap.pop();
+    }
+    return result;
+    }
+};
