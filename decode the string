@@ -1,0 +1,45 @@
+Given an encoded string s, the task is to decode it. The encoding rule is :
+
+k[encodedString], where the encodedString inside the square brackets is being repeated exactly k times. Note that k is guaranteed to be a positive integer.
+Note: The test cases are generated so that the length of the output string will never exceed 105
+
+
+
+
+//c++ code 
+
+class Solution {
+  public:
+    string decodedString(string &s) {
+    
+    stack<int> counts;
+    stack<string> result;
+    string current;
+    int index = 0;
+    
+    while (index < s.length()) {
+        if (isdigit(s[index])) {
+            int count = 0;
+            while (isdigit(s[index])) {
+                count = count * 10 + (s[index] - '0');
+                index++;
+            }
+            counts.push(count);
+        } else if (s[index] == '[') {
+            result.push(current);
+            current = "";
+            index++;
+        } else if (s[index] == ']') {
+            string temp = current;
+            current = result.top(); result.pop();
+            int repeat = counts.top(); counts.pop();
+            while (repeat--) current += temp;
+            index++;
+        } else {
+            current += s[index];
+            index++;
+        }
+    }
+    return current;
+    }
+};
