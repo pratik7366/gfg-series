@@ -1,0 +1,23 @@
+Given a string s, count all palindromic sub-strings present in the string. The length of the palindromic sub-string must be greater than or equal to 2. 
+
+
+
+//c++ code 
+
+class Solution {
+  public:
+    int countPS(string &s) {
+        
+    int n = s.size(), count = 0;
+    for (int i = 0; i < n; i++) {
+        for (int len = 2; i + len <= n; len++) {
+            string sub = s.substr(i, len);
+            string rev = sub;
+            reverse(rev.begin(), rev.end());
+            if (sub == rev) count++;
+        }
+    }
+    return count;
+        
+    }
+};
