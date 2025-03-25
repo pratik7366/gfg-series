@@ -1,0 +1,52 @@
+You are given a boolean expression s containing
+    'T' ---> true
+    'F' ---> false 
+and following operators between symbols
+   &   ---> boolean AND
+    |   ---> boolean OR
+   ^   ---> boolean XOR
+Count the number of ways we can parenthesize the expression so that the value of expression evaluates to true.
+
+Note: The answer is guaranteed to fit within a 32-bit integer.
+
+
+
+
+//c++ code 
+
+class Solution {
+  public:
+    
+        unordered_map<string, int> dp;
+
+int countWays(string &s, int i, int j, bool isTrue) {
+    if (i > j) return 0;
+    if (i == j) return isTrue ? (s[i] == 'T') : (s[i] == 'F');
+    
+    string key = to_string(i) + " " + to_string(j) + " " + to_string(isTrue);
+    if (dp.find(key) != dp.end()) return dp[key];
+    
+    int ways = 0;
+    for (int k = i + 1; k < j; k += 2) {
+        int leftT = countWays(s, i, k - 1, true);
+        int leftF = countWays(s, i, k - 1, false);
+        int rightT = countWays(s, k + 1, j, true);
+        int rightF = countWays(s, k + 1, j, false);
+        
+        if (s[k] == '&') {
+            ways += isTrue ? (leftT * rightT) : (leftT * rightF + leftF * rightT + leftF * rightF);
+        } else if (s[k] == '|') {
+            ways += isTrue ? (leftT * rightT + leftT * rightF + leftF * rightT) : (leftF * rightF);
+        } else if (s[k] == '^') {
+            ways += isTrue ? (leftT * rightF + leftF * rightT) : (leftT * rightT + leftF * rightF);
+        }
+    }
+    return dp[key] = ways;
+}
+
+int countWays(string s) {
+    dp.clear();
+    return countWays(s, 0, s.size() - 1, true);
+        
+    }
+};
