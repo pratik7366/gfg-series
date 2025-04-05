@@ -1,0 +1,42 @@
+Given a grid of size n*m (n is the number of rows and m is the number of columns in the grid) consisting of 'W's (Water) and 'L's (Land). Find the number of islands.
+
+Note: An island is either surrounded by water or the boundary of a grid and is formed by connecting adjacent lands horizontally or vertically or diagonally i.e., in all 8 directions.
+
+
+
+
+
+//c++ code 
+
+class Solution {
+  public:
+    
+    void dfs(int x, int y, vector<vector<char>>& grid, vector<vector<bool>>& visited) {
+    int n = grid.size(), m = grid[0].size();
+    int dx[8] = {-1, -1, -1, 0, 0, 1, 1, 1};
+    int dy[8] = {-1, 0, 1, -1, 1, -1, 0, 1};
+    visited[x][y] = true;
+    for (int d = 0; d < 8; ++d) {
+        int nx = x + dx[d];
+        int ny = y + dy[d];
+        if (nx >= 0 && ny >= 0 && nx < n && ny < m && grid[nx][ny] == 'L' && !visited[nx][ny]) {
+            dfs(nx, ny, grid, visited);
+        }
+    }
+}
+
+int countIslands(vector<vector<char>>& grid) {
+    int n = grid.size(), m = grid[0].size(), count = 0;
+    vector<vector<bool>> visited(n, vector<bool>(m, false));
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < m; ++j) {
+            if (grid[i][j] == 'L' && !visited[i][j]) {
+                dfs(i, j, grid, visited);
+                ++count;
+            }
+        }
+    }
+    return count;
+        
+    }
+};
