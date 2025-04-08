@@ -1,0 +1,36 @@
+
+Given an undirected graph with V vertices numbered from 0 to V-1 and E edges, represented by 2d array edges[][], where edges[i]=[u,v] represents the edge between the vertices u and v. Determine whether a specific edge between two vertices (c, d) is a bridge.
+
+Note:
+
+An edge is called a bridge if removing it increases the number of connected components of the graph.
+if there’s only one path between c and d (which is the edge itself), then that edge is a bridge.
+
+
+
+
+//c++ code 
+
+class Solution {
+  public:
+    
+void dfs(int u, vector<vector<int>>& adj, vector<bool>& visited) {
+    visited[u] = true;
+    for (int v : adj[u]) {
+        if (!visited[v]) dfs(v, adj, visited);
+    }
+}
+
+bool isBridge(int V, vector<vector<int>>& edges, int c, int d) {
+    vector<vector<int>> adj(V);
+    for (auto& e : edges) {
+        if ((e[0] == c && e[1] == d) || (e[0] == d && e[1] == c)) continue;
+        adj[e[0]].push_back(e[1]);
+        adj[e[1]].push_back(e[0]);
+    }
+    vector<bool> visited(V, false);
+    dfs(c, adj, visited);
+    return !visited[d];
+        
+    }
+};
