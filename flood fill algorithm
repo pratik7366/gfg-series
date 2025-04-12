@@ -1,0 +1,32 @@
+You are given a 2D grid image[][] of size n*m, where each image[i][j] represents the color of a pixel in the image. Also provided a coordinate(sr, sc) representing the starting pixel (row and column) and a new color value newColor.
+
+Your task is to perform a flood fill starting from the pixel (sr, sc), changing its color to newColor and the color of all the connected pixels that have the same original color. Two pixels are considered connected if they are adjacent horizontally or vertically (not diagonally) and have the same original color.
+
+
+
+
+
+//c++ code 
+
+class Solution {
+  public:
+    
+         void dfs(vector<vector<int>>& image, int i, int j, int oldColor, int newColor) {
+        int n = image.size(), m = image[0].size();
+        if (i < 0 || j < 0 || i >= n || j >= m || image[i][j] != oldColor) return;
+        image[i][j] = newColor;
+        dfs(image, i + 1, j, oldColor, newColor);
+        dfs(image, i - 1, j, oldColor, newColor);
+        dfs(image, i, j + 1, oldColor, newColor);
+        dfs(image, i, j - 1, oldColor, newColor);
+    }
+    
+    vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int newColor) {
+        int oldColor = image[sr][sc];
+        if (oldColor != newColor)
+            dfs(image, sr, sc, oldColor, newColor);
+        return image;
+    
+        
+    }
+};
