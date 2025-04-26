@@ -1,0 +1,60 @@
+You are given a binary tree, and the task is to determine whether it satisfies the properties of a max-heap.
+
+A binary tree is considered a max-heap if it satisfies the following conditions:
+
+Completeness: Every level of the tree, except possibly the last, is completely filled, and all nodes are as far left as possible.
+Max-Heap Property: The value of each node is greater than or equal to the values of its children.
+
+
+
+
+//c++ code 
+
+class Solution {
+  public:
+    bool isHeap(Node* root) {
+      if (!root) return true;
+    queue<Node*> q;
+    q.push(root);
+    bool nullSeen = false;
+
+    while (!q.empty()) {
+        Node* curr = q.front();
+        q.pop();
+        if (curr->left) {
+            if (nullSeen || curr->data < curr->left->data) return false;
+            q.push(curr->left);
+        } else nullSeen = true;
+        if (curr->right) {
+            if (nullSeen || curr->data < curr->right->data) return false;
+            q.push(curr->right);
+        } else nullSeen = true;
+    }
+    return true;
+}
+
+Node* buildTree(vector<string>& nodes) {
+    if (nodes.empty() || nodes[0] == "N") return NULL;
+    Node* root = new Node(stoi(nodes[0]));
+    queue<Node*> q;
+    q.push(root);
+    int i = 1;
+    while (!q.empty() && i < nodes.size()) {
+        Node* curr = q.front();
+        q.pop();
+        if (nodes[i] != "N") {
+            curr->left = new Node(stoi(nodes[i]));
+            q.push(curr->left);
+        }
+        i++;
+        if (i >= nodes.size()) break;
+        if (nodes[i] != "N") {
+            curr->right = new Node(stoi(nodes[i]));
+            q.push(curr->right);
+        }
+        i++;
+    }
+    return root;
+        
+    }
+};
