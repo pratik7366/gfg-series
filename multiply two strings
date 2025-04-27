@@ -1,0 +1,51 @@
+Given two numbers as strings s1 and s2. Calculate their Product.
+Note: The numbers can be negative and You are not allowed to use any built-in function or convert the strings to integers. There can be zeros in the begining of the numbers. You don't need to specify '+' sign in the begining of positive numbers.
+
+
+
+
+
+//c++ code 
+
+class Solution {
+  public:
+    /*You are required to complete below function */
+    string multiplyStrings(string& s1, string& s2) {
+      
+        bool neg1 = false, neg2 = false;
+        if (s1[0] == '-') {
+            neg1 = true;
+            s1 = s1.substr(1);
+        }
+        if (s2[0] == '-') {
+            neg2 = true;
+            s2 = s2.substr(1);
+        }
+        
+        while (s1.size() > 1 && s1[0] == '0') s1.erase(s1.begin());
+        while (s2.size() > 1 && s2[0] == '0') s2.erase(s2.begin());
+        
+        if (s1 == "0" || s2 == "0") return "0";
+
+        int n = s1.size(), m = s2.size();
+        vector<int> res(n + m, 0);
+        
+        for (int i = n - 1; i >= 0; --i) {
+            for (int j = m - 1; j >= 0; --j) {
+                int mul = (s1[i] - '0') * (s2[j] - '0');
+                int sum = mul + res[i + j + 1];
+                res[i + j + 1] = sum % 10;
+                res[i + j] += sum / 10;
+            }
+        }
+        
+        string ans = "";
+        int i = 0;
+        while (i < res.size() && res[i] == 0) ++i;
+        while (i < res.size()) ans += (res[i++] + '0');
+        
+        if (neg1 ^ neg2) ans = "-" + ans;
+        return ans;
+        
+    }
+};
