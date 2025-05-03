@@ -1,0 +1,55 @@
+You are given the head of a linked list. You have to replace all the values of the nodes with the nearest prime number. If more than one prime number exists at an equal distance, choose the smallest one. Return the head of the modified linked list.
+
+
+
+
+
+//c++ code 
+
+class Solution {
+  public:
+    
+         const int MAX = 20000;
+    vector<int> primes;
+
+    
+    void sieve() {
+        vector<bool> isPrime(MAX + 1, true);
+        isPrime[0] = isPrime[1] = false;
+        for (int i = 2; i * i <= MAX; ++i) {
+            if (isPrime[i]) {
+                for (int j = i * i; j <= MAX; j += i)
+                    isPrime[j] = false;
+            }
+        }
+        for (int i = 2; i <= MAX; ++i) {
+            if (isPrime[i])
+                primes.push_back(i);
+        }
+    }
+
+    int nearestPrime(int num) {
+       
+        int idx = lower_bound(primes.begin(), primes.end(), num) - primes.begin();
+        if (idx == 0) return primes[0];
+        if (idx == primes.size()) return primes.back();
+
+        int before = primes[idx - 1];
+        int after = primes[idx];
+
+        if (abs(before - num) <= abs(after - num))
+            return before;
+        return after;
+    }
+
+    Node* primeList(Node* head) {
+        sieve();  
+        Node* curr = head;
+        while (curr) {
+            curr->val = nearestPrime(curr->val);
+            curr = curr->next;
+        }
+        return head;
+        
+    }
+};
