@@ -1,0 +1,37 @@
+Given a string str, your task is to find the length of the smallest window that contains all the characters of the given string at least once.
+
+
+
+
+
+//c++ code 
+
+class Solution {
+  public:
+    int findSubString(string& str) {
+          
+         int n = str.size();
+        unordered_set<char> unique_chars(str.begin(), str.end());
+        int distinct_count = unique_chars.size();
+
+        unordered_map<char, int> window_count;
+        int left = 0, min_len = n + 1, count = 0;
+
+        for (int right = 0; right < n; ++right) {
+            window_count[str[right]]++;
+
+            if (window_count[str[right]] == 1)
+                count++;
+
+            while (count == distinct_count) {
+                min_len = min(min_len, right - left + 1);
+                window_count[str[left]]--;
+                if (window_count[str[left]] == 0)
+                    count--;
+                left++;
+            }
+        }
+
+        return min_len;
+    }
+};
