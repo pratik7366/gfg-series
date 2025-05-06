@@ -1,0 +1,40 @@
+Given a Binary Tree, you need to find all the possible paths from the root node to all the leaf nodes of the binary tree.
+
+Note: The paths should be returned such that paths from the left subtree of any node are listed first, followed by paths from the right subtree.
+
+
+
+
+
+
+//c++ code 
+
+class Solution {
+  public:
+    vector<int> leftView(Node *root) {
+     
+    vector<int> result;
+    if (!root) return result;
+
+    queue<Node*> q;
+    q.push(root);
+
+    while (!q.empty()) {
+        int levelSize = q.size();
+      
+        for (int i = 0; i < levelSize; ++i) {
+            Node* current = q.front();
+            q.pop();
+
+        
+            if (i == 0)
+                result.push_back(current->data);
+
+            if (current->left) q.push(current->left);
+            if (current->right) q.push(current->right);
+        }
+    }
+    return result;
+        
+    }
+};
