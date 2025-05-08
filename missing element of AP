@@ -1,0 +1,38 @@
+Given a sorted array arr[] that represents an Arithmetic Progression (AP) with exactly one missing element, find the missing number.
+
+Note: An element will always exist that, upon inserting into a sequence forms Arithmetic progression. If the given sequence already forms a valid complete AP, return the (n+1)-th element that would come next in the sequence.
+
+
+
+
+
+//c++ code 
+
+class Solution {
+  public:
+    int findMissing(vector<int> &arr) {
+ 
+    int n = arr.size();
+
+    
+    int d = INT_MAX;
+    for (int i = 1; i < n; ++i) {
+        d = min(d, arr[i] - arr[i - 1]);
+    }
+
+   
+    int left = 0, right = n - 1;
+    while (left <= right) {
+        int mid = (left + right) / 2;
+        int expected = arr[0] + mid * d;
+
+        if (arr[mid] == expected) {
+            left = mid + 1;
+        } else {
+            right = mid - 1;
+        }
+    }
+
+    return arr[0] + left * d;
+    }
+};
