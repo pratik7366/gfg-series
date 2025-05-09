@@ -1,0 +1,31 @@
+Given a number k and string s of digits denoting a positive integer, build the largest number possible by performing swap operations on the digits of s at most k times.
+
+
+
+//c++ code 
+
+class Solution {
+  public:
+    void helper(string &s, int k, string &maxi, int idx) {
+        if (k == 0) return;
+        char maxDigit = s[idx];
+        for (int i = idx + 1; i < s.size(); i++) {
+            if (s[i] > maxDigit) maxDigit = s[i];
+        }
+        if (maxDigit != s[idx]) k--;
+        for (int i = s.size() - 1; i >= idx; i--) {
+            if (s[i] == maxDigit) {
+                swap(s[i], s[idx]);
+                if (s > maxi) maxi = s;
+                helper(s, k, maxi, idx + 1);
+                swap(s[i], s[idx]);
+            }
+        }
+    }
+
+    string findMaximumNum(string& s, int k) {
+        string maxi = s;
+        helper(s, k, maxi, 0);
+        return maxi;
+    }
+};
