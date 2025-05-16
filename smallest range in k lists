@@ -1,0 +1,48 @@
+Given a 2d integer array arr[][] of size k*n, where each row is sorted in ascending order. Your task is to find the smallest range [l, r] that includes at least one element from each of the k lists. If more than one such ranges are found, return the first one.
+
+
+
+
+
+//c++ code 
+
+class Solution {
+  public:
+  vector<int> findSmallestRange(vector<vector<int>>& arr) {
+    
+        int k = arr.size();
+        int mini = INT_MAX, maxi = INT_MIN;
+        int start = 0, end = INT_MAX;
+
+        typedef tuple<int, int, int> T;
+        priority_queue<T, vector<T>, greater<T>> pq;
+
+        for (int i = 0; i < k; ++i) {
+            int val = arr[i][0];
+            pq.push(make_tuple(val, i, 0));
+            maxi = max(maxi, val);
+        }
+
+        while (!pq.empty()) {
+            T current = pq.top();
+            pq.pop();
+
+            int val = get<0>(current);
+            int row = get<1>(current);
+            int idx = get<2>(current);
+
+            if (maxi - val < end - start) {
+                start = val;
+                end = maxi;
+            }
+
+            if (idx + 1 == arr[row].size()) break;
+
+            int nextVal = arr[row][idx + 1];
+            pq.push(make_tuple(nextVal, row, idx + 1));
+            maxi = max(maxi, nextVal);
+        }
+
+        return {start, end};
+      }
+};
