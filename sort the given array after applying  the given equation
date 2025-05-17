@@ -1,0 +1,45 @@
+
+Given an integer array arr[] sorted in ascending order, along with three integers: A, B, and C. The task is to transform each element x in the array using the quadratic function A*(x2) + B*x + C. After applying this transformation to every element, return the modified array in sorted order.
+
+
+
+
+//c++ code 
+
+class Solution {
+  public:
+ 
+           int apply(int x, int A, int B, int C) {
+        return A * x * x + B * x + C;
+    }
+
+    vector<int> sortArray(vector<int>& arr, int A, int B, int C) {
+        int n = arr.size();
+        vector<int> res(n);
+        int i = 0, j = n - 1;
+        int idx = A >= 0 ? n - 1 : 0;
+
+        while (i <= j) {
+            int val_i = apply(arr[i], A, B, C);
+            int val_j = apply(arr[j], A, B, C);
+            if (A >= 0) {
+                if (val_i > val_j) {
+                    res[idx--] = val_i;
+                    i++;
+                } else {
+                    res[idx--] = val_j;
+                    j--;
+                }
+            } else {
+                if (val_i < val_j) {
+                    res[idx++] = val_i;
+                    i++;
+                } else {
+                    res[idx++] = val_j;
+                    j--;
+                }
+            }
+        }
+        return res;
+    }
+};
