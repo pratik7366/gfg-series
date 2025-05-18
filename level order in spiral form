@@ -1,0 +1,36 @@
+
+Given a binary tree and the task is to find the spiral order traversal of the tree and return the list containing the elements.
+Spiral order Traversal mean: Starting from level 0 for root node, for all the even levels we print the node's value from right to left and for all the odd levels we print the node's value from left to right.
+For below tree, function should return [1, 2, 3, 4, 5, 6, 7]
+
+
+
+//c++ code 
+
+class Solution {
+  public:
+    vector<int> findSpiral(Node* root) {
+
+        vector<int> res;
+        if (!root) return res;
+        queue<Node*> q;
+        q.push(root);
+        bool leftToRight = false;
+
+        while (!q.empty()) {
+            int size = q.size();
+            vector<int> level(size);
+            for (int i = 0; i < size; ++i) {
+                Node* node = q.front();
+                q.pop();
+                int idx = leftToRight ? i : size - 1 - i;
+                level[idx] = node->data;
+                if (node->left) q.push(node->left);
+                if (node->right) q.push(node->right);
+            }
+            for (int val : level) res.push_back(val);
+            leftToRight = !leftToRight;
+        }
+        return res;
+    }
+};
