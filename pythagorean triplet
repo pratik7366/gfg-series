@@ -1,0 +1,29 @@
+Given an array arr[], return true if there is a triplet (a, b, c) from the array (where a, b, and c are on different indexes) that satisfies a2 + b2 = c2, otherwise return false.
+
+
+
+
+
+
+//c++ code 
+
+class Solution {
+  public:
+    bool pythagoreanTriplet(vector<int>& arr) {
+  
+    unordered_set<int> squares;
+    for (int x : arr)
+        squares.insert(x * x);
+    
+    int n = arr.size();
+    for (int i = 0; i < n; ++i) {
+        int a2 = arr[i] * arr[i];
+        for (int j = i + 1; j < n; ++j) {
+            int b2 = arr[j] * arr[j];
+            if (squares.count(a2 + b2))
+                return true;
+        }
+    }
+    return false;
+    }
+};
