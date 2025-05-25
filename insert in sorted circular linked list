@@ -1,0 +1,40 @@
+
+Given a sorted circular linked list, the task is to insert a new node in this circular linked list so that it remains a sorted circular linked list.
+
+
+
+
+//c++ code 
+
+class Solution {
+  public:
+    Node* sortedInsert(Node* head, int data) {
+     
+    Node* newNode = new Node(data);
+    if (!head) {
+        newNode->next = newNode;
+        return newNode;
+    }
+
+    Node* curr = head;
+    Node* prev = nullptr;
+
+    do {
+        prev = curr;
+        curr = curr->next;
+
+        if ((prev->data <= data && data <= curr->data) || 
+            (prev->data > curr->data && (data >= prev->data || data <= curr->data))) {
+            break;
+        }
+
+    } while (curr != head);
+
+    prev->next = newNode;
+    newNode->next = curr;
+
+    return (head->data > data) ? newNode : head;
+}
+
+
+};
