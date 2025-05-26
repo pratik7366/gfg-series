@@ -1,0 +1,39 @@
+Given a preorder traversal of a BST, find the leaf nodes of the tree without building the tree.
+
+
+
+
+
+//c++ code 
+
+class Solution {
+  public:
+  vector<int> preorder;
+int index;
+
+void dfs(int minVal, int maxVal, vector<int>& leaves) {
+    if (index >= preorder.size()) return;
+    int val = preorder[index];
+    if (val < minVal || val > maxVal) return;
+
+    index++;
+    int curr = index;
+    dfs(minVal, val - 1, leaves);
+    bool left = (index > curr);
+
+    curr = index;
+    dfs(val + 1, maxVal, leaves);
+    bool right = (index > curr);
+
+    if (!left && !right)
+        leaves.push_back(val);
+}
+
+vector<int> leafNodes(vector<int>& pre) {
+    preorder = pre;
+    index = 0;
+    vector<int> leaves;
+    dfs(INT_MIN, INT_MAX, leaves);
+    return leaves;
+    }
+};
