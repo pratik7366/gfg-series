@@ -1,0 +1,62 @@
+
+Given a binary tree root[], you need to find the sum of the nodes on the longest path from the root to any leaf node. If two or more paths have the same length, the path with the maximum sum of node values should be considered.
+
+
+
+
+
+//c++ code 
+
+class Solution {
+  public:
+  
+      Node* buildTree(string str) {
+    if (str.length() == 0 || str[0] == 'N') return NULL;
+    vector<string> ip;
+    istringstream iss(str);
+    for (string s; iss >> s;) ip.push_back(s);
+    Node* root = new Node(stoi(ip[0]));
+    queue<Node*> q;
+    q.push(root);
+    int i = 1;
+    while (!q.empty() && i < ip.size()) {
+        Node* curr = q.front();
+        q.pop();
+        if (ip[i] != "N") {
+            curr->left = new Node(stoi(ip[i]));
+            q.push(curr->left);
+        }
+        i++;
+        if (i >= ip.size()) break;
+        if (ip[i] != "N") {
+            curr->right = new Node(stoi(ip[i]));
+            q.push(curr->right);
+        }
+        i++;
+    }
+    return root;
+}
+
+void dfs(Node* root, int sum, int len, int& maxLen, int& maxSum) {
+    if (!root) return;
+    sum += root->data;
+    if (!root->left && !root->right) {
+        if (len > maxLen) {
+            maxLen = len;
+            maxSum = sum;
+        } else if (len == maxLen && sum > maxSum) {
+            maxSum = sum;
+        }
+        return;
+    }
+    dfs(root->left, sum, len + 1, maxLen, maxSum);
+    dfs(root->right, sum, len + 1, maxLen, maxSum);
+}
+
+int sumOfLongRootToLeafPath(Node* root) {
+    int maxLen = 0, maxSum = 0;
+    dfs(root, 0, 1, maxLen, maxSum);
+    return maxSum;
+        
+    }
+};
