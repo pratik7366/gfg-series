@@ -1,0 +1,34 @@
+Given a matrix mat[][] of size n*n, where each row and column is sorted in non-decreasing order. Find the kth smallest element in the matrix.
+
+
+
+
+
+
+//c++ code 
+
+class Solution {
+  public:
+ int kthSmallest(vector<vector<int>> &mat, int k) {
+    int n = mat.size();
+    typedef tuple<int, int, int> Cell;
+    priority_queue<Cell, vector<Cell>, greater<Cell>> minHeap;
+
+    for (int i = 0; i < n; i++) {
+        minHeap.push(make_tuple(mat[i][0], i, 0));
+    }
+
+    while (--k) {
+        Cell current = minHeap.top();
+        minHeap.pop();
+        int val = get<0>(current);
+        int r = get<1>(current);
+        int c = get<2>(current);
+        if (c + 1 < n) {
+            minHeap.push(make_tuple(mat[r][c + 1], r, c + 1));
+        }
+    }
+
+    return get<0>(minHeap.top());
+    }
+};
