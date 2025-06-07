@@ -1,0 +1,61 @@
+
+Given a string s consisting of digits, determine whether it can be classified as a sum-string.
+
+A sum-string is a string that can be split into two or more non-empty substrings such that:
+
+
+The rightmost substring is equal to the sum of the two substrings immediately before it (interpreted as integers).
+
+This condition must apply recursively to the substrings before it.
+
+The rightmost substring (and any number in the sum) must not contain leading zeroes, unless the number is exactly '0'.
+
+
+
+
+//c++ code 
+
+class Solution {
+  public:
+   
+ string addStrings(string a, string b) {
+    string res = "";
+    int carry = 0, i = a.length()-1, j = b.length()-1;
+    while (i >= 0 || j >= 0 || carry) {
+        int sum = carry;
+        if (i >= 0) sum += a[i--] - '0';
+        if (j >= 0) sum += b[j--] - '0';
+        res = char(sum % 10 + '0') + res;
+        carry = sum / 10;
+    }
+    return res;
+}
+
+
+bool isValid(string s, int pos, string a, string b) {
+    if ((a.size() > 1 && a[0] == '0') || (b.size() > 1 && b[0] == '0'))
+        return false;
+
+    string sum = addStrings(a, b);
+    if (pos + sum.size() > s.size() || s.substr(pos, sum.size()) != sum)
+        return false;
+    if (pos + sum.size() == s.size())
+        return true;
+    return isValid(s, pos + sum.size(), b, sum);
+}
+
+
+bool isSumString(string s) {
+    int n = s.length();
+    for (int i = 1; i < n; i++) {
+        for (int j = i + 1; j < n; j++) {
+            string a = s.substr(0, i);
+            string b = s.substr(i, j - i);
+            if (isValid(s, j, a, b))
+                return true;
+        }
+    }
+    return false;
+        
+    }
+};
