@@ -1,0 +1,33 @@
+You are given a sorted array arr[] of unique integers, an integer k, and a target value x. Return exactly k elements from the array closest to x, excluding x if it exists.
+
+An element a is closer to x than b if:
+
+
+|a - x| < |b - x|, or
+|a - x| == |b - x| and a > b (i.e., prefer the larger element if tied)
+
+
+Return the k closest elements in order of closeness.
+
+
+
+
+//c++ code 
+
+class Solution {
+  public:
+    vector<int> printKClosest(vector<int> arr, int k, int x) {
+ 
+    vector<int> result, temp;
+    for (int i = 0; i < arr.size(); ++i) {
+        if (arr[i] != x) temp.push_back(arr[i]);
+    }
+    sort(temp.begin(), temp.end(), [&](int a, int b) {
+        int da = abs(a - x), db = abs(b - x);
+        if (da != db) return da < db;
+        return a > b;
+    });
+    for (int i = 0; i < k; ++i) result.push_back(temp[i]);
+    return result;
+    }
+};
