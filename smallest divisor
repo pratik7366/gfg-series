@@ -1,0 +1,26 @@
+
+Given an integer array arr[] and an integer k (where k ≥ arr.length), find the smallest positive integer divisor such that the sum of the ceiling values of each element in arr[] divided by this divisor is less than or equal to k.
+
+
+
+
+//c++ code
+
+class Solution {
+  public:
+    int smallestDivisor(vector<int>& arr, int k) {
+     
+    int low = 1, high = *max_element(arr.begin(), arr.end());
+    while (low < high) {
+        int mid = (low + high) / 2;
+        int sum = 0;
+        for (int a : arr) {
+            sum += (a + mid - 1) / mid;
+        }
+        if (sum <= k) high = mid;
+        else low = mid + 1;
+    }
+    return low;
+        
+    }
+};
