@@ -1,0 +1,43 @@
+
+You are given an array heights[] representing the heights of towers and another array cost[] where each element represents the cost of modifying the height of respective tower.
+
+The goal is to make all towers of same height by either adding or removing blocks from each tower.
+Modifying the height of tower (add or remove) 'i' by 1 unit costs cost[i].
+Return the minimum cost to equalize the heights of all towers.
+
+
+
+
+
+
+//c++ code 
+
+class Solution {
+  public:
+    long long  minCost(vector<int>& heights, vector<int>& cost) {
+   
+    int n = heights.size();
+    vector<pair<int, int>> hcost(n);
+    for (int i = 0; i < n; ++i) {
+        hcost[i] = {heights[i], cost[i]};
+    }
+    sort(hcost.begin(), hcost.end());
+
+    vector<long long> prefixCost(n), prefixSum(n);
+    prefixCost[0] = hcost[0].second;
+    prefixSum[0] = 1LL * hcost[0].first * hcost[0].second;
+    for (int i = 1; i < n; ++i) {
+        prefixCost[i] = prefixCost[i - 1] + hcost[i].second;
+        prefixSum[i] = prefixSum[i - 1] + 1LL * hcost[i].first * hcost[i].second;
+    }
+
+    long long totalCost = LLONG_MAX;
+    for (int i = 0; i < n; ++i) {
+        long long left = 1LL * hcost[i].first * prefixCost[i] - prefixSum[i];
+        long long right = (prefixSum[n - 1] - prefixSum[i]) - 1LL * hcost[i].first * (prefixCost[n - 1] - prefixCost[i]);
+        totalCost = min(totalCost, left + right);
+    }
+
+    return totalCost;
+}
+};
