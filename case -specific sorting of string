@@ -1,0 +1,26 @@
+Given a string s consisting of only uppercase and lowercase characters. The task is to sort uppercase and lowercase letters separately such that if the ith place in the original string had an Uppercase character then it should not have a lowercase character after being sorted and vice versa.
+
+
+
+//c++ code 
+
+class Solution {
+  public:
+    string caseSort(string& s) {
+    
+    vector<char> upper, lower;
+    for (char c : s) {
+        if (isupper(c)) upper.push_back(c);
+        else lower.push_back(c);
+    }
+    sort(upper.begin(), upper.end());
+    sort(lower.begin(), lower.end());
+    int ui = 0, li = 0;
+    for (int i = 0; i < s.size(); ++i) {
+        if (isupper(s[i])) s[i] = upper[ui++];
+        else s[i] = lower[li++];
+    }
+    return s;
+        
+    }
+};
