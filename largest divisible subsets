@@ -1,0 +1,35 @@
+Given an array arr[] of distinct positive integers. Your task is to find the largest subset such that for every pair of elements (x, y) in the subset, either x divides y or y divides x.
+Note : If multiple subsets of the same maximum length exist, return the one that is lexicographically greatest, after sorting the subset in ascending order.
+
+
+
+//c++ coode
+
+class Solution {
+  public:
+    vector<int> largestSubset(vector<int>& nums) {
+      int n = nums.size();
+        sort(nums.begin(), nums.end());
+        vector<vector<int>> dp(n);
+
+        vector<int> result;
+        for (int i = 0; i < n; ++i) {
+            dp[i] = {nums[i]};
+            for (int j = 0; j < i; ++j) {
+                if (nums[i] % nums[j] == 0) {
+                    vector<int> candidate = dp[j];
+                    candidate.push_back(nums[i]);
+                    if (candidate.size() > dp[i].size() || 
+                        (candidate.size() == dp[i].size() && candidate > dp[i])) {
+                        dp[i] = candidate;
+                    }
+                }
+            }
+            if (dp[i].size() > result.size() || 
+                (dp[i].size() == result.size() && dp[i] > result)) {
+                result = dp[i];
+            }
+        }
+        return result;
+    }
+};
