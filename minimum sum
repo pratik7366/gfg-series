@@ -1,0 +1,34 @@
+Given an array arr[ ] consisting of digits, your task is to form two numbers using all the digits such that their sum is minimized. Return the minimum possible sum as a string with no leading zeroes.
+
+
+
+
+
+//c++ code 
+
+class Solution {
+  public:
+   
+    string minSum(vector<int> &arr) {
+    sort(arr.begin(), arr.end());
+    string num1 = "", num2 = "";
+    for (int i = 0; i < arr.size(); ++i) {
+        if (i % 2 == 0) num1 += to_string(arr[i]);
+        else num2 += to_string(arr[i]);
+    }
+
+    string res = "";
+    int i = num1.size() - 1, j = num2.size() - 1, carry = 0;
+    while (i >= 0 || j >= 0 || carry) {
+        int a = i >= 0 ? num1[i--] - '0' : 0;
+        int b = j >= 0 ? num2[j--] - '0' : 0;
+        int sum = a + b + carry;
+        res.push_back((sum % 10) + '0');
+        carry = sum / 10;
+    }
+    reverse(res.begin(), res.end());
+    int pos = res.find_first_not_of('0');
+    return pos == string::npos ? "0" : res.substr(pos);
+
+    }
+};
