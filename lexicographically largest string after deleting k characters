@@ -1,0 +1,26 @@
+Given a string s consisting of lowercase English letters and an integer k, your task is to remove exactly k characters from the string. The resulting string must be the largest possible in lexicographical  order, while maintain the relative order of the remaining characters.
+
+
+
+
+//c++ code
+
+class Solution {
+  public:
+    string maxSubseq(string& s, int k) {
+    
+    int n = s.size();
+    int keep = n - k;
+    string result;
+    for (char c : s) {
+        while (!result.empty() && k > 0 && result.back() < c) {
+            result.pop_back();
+            k--;
+        }
+        result.push_back(c);
+    }
+    result.resize(keep);
+    return result;
+        
+    }
+};
