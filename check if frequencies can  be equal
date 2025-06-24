@@ -1,0 +1,31 @@
+Given a string s consisting only lowercase alphabetic characters, check whether it is possible to remove at most one character such that the  frequency of each distinct character in the string becomes same. Return true if it is possible; otherwise, return false.
+
+
+
+
+//c++ code 
+
+class Solution {
+  public:
+    bool sameFreq(string& s) {
+     
+    unordered_map<char, int> freq;
+    for (char c : s) freq[c]++;
+    
+    unordered_map<int, int> count;
+    for (auto &p : freq) count[p.second]++;
+    
+    if (count.size() == 1) return true;
+    if (count.size() > 2) return false;
+    
+    auto it = count.begin();
+    int f1 = it->first, c1 = it->second;
+    ++it;
+    int f2 = it->first, c2 = it->second;
+
+    if ((f1 == 1 && c1 == 1) || (f2 == 1 && c2 == 1)) return true;
+    if ((abs(f1 - f2) == 1) && ((f1 > f2 && c1 == 1) || (f2 > f1 && c2 == 1))) return true;
+
+    return false;
+    }
+};
