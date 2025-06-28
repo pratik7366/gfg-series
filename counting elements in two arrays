@@ -1,0 +1,19 @@
+You are given two unsorted arrays a[] and b[]. Both arrays may contain duplicate elements. For each element in a[], your task is to count how many elements in b[] are less than or equal to that element.
+
+
+
+//c++ code 
+
+class Solution {
+  public:
+    vector<int> countLessEq(vector<int>& a, vector<int>& b) {
+     
+    sort(b.begin(), b.end());
+    vector<int> result;
+    for (int num : a) {
+        int count = upper_bound(b.begin(), b.end(), num) - b.begin();
+        result.push_back(count);
+    }
+    return result;
+    }
+};
