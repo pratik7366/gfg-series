@@ -1,0 +1,30 @@
+Given a string s consisting only lowercase alphabets and an integer k. Find the count of all substrings of length k which have exactly k-1 distinct characters.
+
+
+
+
+
+//c++ code 
+
+class Solution {
+  public:
+    int substrCount(string &s, int k) {
+     
+    if (s.size() < k) return 0;
+    unordered_map<char, int> freq;
+    int count = 0, distinct = 0;
+
+    for (int i = 0; i < k; ++i) {
+        if (freq[s[i]]++ == 0) ++distinct;
+    }
+    if (distinct == k - 1) ++count;
+
+    for (int i = k; i < s.size(); ++i) {
+        if (--freq[s[i - k]] == 0) --distinct;
+        if (freq[s[i]]++ == 0) ++distinct;
+        if (distinct == k - 1) ++count;
+    }
+
+    return count;
+       }
+};
