@@ -1,0 +1,64 @@
+Given an array of strings arr[]. Find the longest string in arr[] such that every prefix of it is also present in the array arr[]. 
+
+Note: If multiple strings have the same maximum length, return the lexicographically smallest one.
+
+
+
+
+//c++ code 
+
+class Solution {
+  public:
+   
+   struct TrieNode {
+    TrieNode* children[26];
+    bool isEnd;
+    TrieNode() {
+        isEnd = false;
+        for (int i = 0; i < 26; ++i)
+            children[i] = nullptr;
+    }
+};
+
+class Trie {
+public:
+    TrieNode* root;
+    Trie() {
+        root = new TrieNode();
+    }
+    void insert(const string& word) {
+        TrieNode* node = root;
+        for (char c : word) {
+            if (!node->children[c - 'a'])
+                node->children[c - 'a'] = new TrieNode();
+            node = node->children[c - 'a'];
+        }
+        node->isEnd = true;
+    }
+    bool allPrefixesExist(const string& word) {
+        TrieNode* node = root;
+        for (char c : word) {
+            node = node->children[c - 'a'];
+            if (!node || !node->isEnd)
+                return false;
+        }
+        return true;
+    }
+};
+
+string longestString(vector<string>& arr) {
+    Trie trie;
+    for (string& word : arr)
+        trie.insert(word);
+    sort(arr.begin(), arr.end());
+    string res = "";
+    for (string& word : arr) {
+        if (trie.allPrefixesExist(word)) {
+            if (word.size() > res.size() || (word.size() == res.size() && word < res))
+                res = word;
+        }
+    }
+    return res;
+        
+    }
+};
