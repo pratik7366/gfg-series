@@ -1,0 +1,44 @@
+Given an array arr[] of positive integers, your task is to find the maximum possible sum of all elements that are not part of the Longest Increasing Subsequence (LIS).
+
+
+
+
+
+//c++ code 
+
+class Solution {
+  public:
+    int nonLisMaxSum(vector<int>& arr) {
+ 
+    int n = arr.size();
+    vector<int> dp(n, 1);
+    vector<int> sumLIS(n);
+
+    for (int i = 0; i < n; ++i) {
+        sumLIS[i] = arr[i];
+        for (int j = 0; j < i; ++j) {
+            if (arr[j] < arr[i]) {
+                if (dp[j] + 1 > dp[i]) {
+                    dp[i] = dp[j] + 1;
+                    sumLIS[i] = sumLIS[j] + arr[i];
+                } else if (dp[j] + 1 == dp[i]) {
+                    sumLIS[i] = min(sumLIS[i], sumLIS[j] + arr[i]);
+                }
+            }
+        }
+    }
+
+    int totalSum = 0, minLISsum = 0, maxLen = 0;
+    for (int i = 0; i < n; ++i) {
+        totalSum += arr[i];
+        if (dp[i] > maxLen) {
+            maxLen = dp[i];
+            minLISsum = sumLIS[i];
+        } else if (dp[i] == maxLen) {
+            minLISsum = min(minLISsum, sumLIS[i]);
+        }
+    }
+
+    return totalSum - minLISsum;
+    }
+};
