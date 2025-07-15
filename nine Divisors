@@ -1,0 +1,54 @@
+Given a positive integer n, you need to count the numbers less than or equal to n having exactly 9 divisors.
+
+
+
+
+//c++ code 
+
+class solution {
+public:
+  vector<int> generatePrimes(int limit) {
+    vector<bool> isPrime(limit + 1, true);
+    vector<int> primes;
+    isPrime[0] = isPrime[1] = false;
+
+    for (int i = 2; i <= limit; ++i) {
+        if (isPrime[i]) {
+            primes.push_back(i);
+            for (long long j = 1LL * i * i; j <= limit; j += i)
+                isPrime[j] = false;
+        }
+    }
+    return primes;
+}
+
+int countNumbers(int n) {
+    int count = 0;
+
+   
+    int root = sqrt(n) + 1;
+    vector<int> primes = generatePrimes(root);
+
+   
+    for (int p : primes) {
+        long long val = 1;
+        for (int i = 0; i < 8; ++i) val *= p;
+        if (val <= n) count++;
+        else break;
+    }
+
+   
+    int sz = primes.size();
+    for (int i = 0; i < sz; ++i) {
+        for (int j = i + 1; j < sz; ++j) {
+            long long val = 1LL * primes[i] * primes[j];
+            val *= val;
+            if (val <= n) count++;
+            else break;
+        }
+    }
+
+    return count;
+        
+    }
+};
