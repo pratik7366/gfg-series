@@ -1,0 +1,19 @@
+
+Given a number represented as a string s (which may be very large), check whether it is divisible by 13 or not.
+
+
+//c++ code 
+
+
+class Solution {
+  public:
+    bool divby13(string &s) {
+        
+    int remainder = 0;
+    for (char c : s) {
+        remainder = (remainder * 10 + (c - '0')) % 13;
+    }
+    return remainder == 0;
+        
+    }
+};
