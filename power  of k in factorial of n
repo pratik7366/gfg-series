@@ -1,0 +1,34 @@
+Given two positive integers n and k, determine the highest value of x such that kx divides n! (n factorial) completely (i.e., n % (kx) == 0)
+
+
+//c++ code 
+
+class Solution {
+  public:
+    int maxKPower(int n, int k) {
+ 
+    map<int, int> primeFactors;
+    int temp = k;
+    for (int i = 2; i * i <= temp; ++i) {
+        while (temp % i == 0) {
+            primeFactors[i]++;
+            temp /= i;
+        }
+    }
+    if (temp > 1) primeFactors[temp]++;
+
+    int result = 1e9;
+    for (auto it = primeFactors.begin(); it != primeFactors.end(); ++it) {
+        int p = it->first;
+        int cnt = it->second;
+        int power = 0;
+        int N = n;
+        while (N) {
+            N /= p;
+            power += N;
+        }
+        result = min(result, power / cnt);
+    }
+    return result;
+    }
+};
