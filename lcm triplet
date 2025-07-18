@@ -1,0 +1,35 @@
+Given a number n. Find the maximum possible LCM that can be obtained by selecting three numbers less than or equal to n.
+Note : LCM stands for Lowest Common Multiple
+
+
+
+//c++ code 
+
+class Solution {
+  public:
+  
+int gcd(int a, int b) {
+    while (b) {
+        a %= b;
+        swap(a, b);
+    }
+    return a;
+}
+
+long long lcm(int a, int b) {
+    return 1LL * a / gcd(a, b) * b;
+}
+
+int lcmTriplets(int n) {
+    long long res = 0;
+    for (int i = n; i >= max(1, n - 5); i--) {
+        for (int j = n; j >= max(1, n - 5); j--) {
+            for (int k = n; k >= max(1, n - 5); k--) {
+                long long val = lcm(i, lcm(j, k));
+                res = max(res, val);
+            }
+        }
+    }
+    return res;
+    }
+};
