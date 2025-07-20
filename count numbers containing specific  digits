@@ -1,0 +1,33 @@
+You are given an integer n representing the number of digits in a number, and an array arr[] containing digits from 0 to 9. Your have to count how many n-digit positive integers can be formed such that at least one digit from the array arr[] appears in the number.
+
+
+
+//c++ code 
+
+
+class Solution {
+  public:
+    int countValid(int n, vector<int>& arr) {
+    unordered_set<int> bad(arr.begin(), arr.end());
+    vector<int> good_digits;
+
+    for (int d = 0; d <= 9; d++) {
+        if (bad.find(d) == bad.end()) {
+            good_digits.push_back(d);
+        }
+    }
+
+    int total = 9 * pow(10, n - 1);
+
+    if (good_digits.empty()) return total; 
+
+    int countWithoutBad = 0;
+    for (int d : good_digits) {
+        if (d == 0 && n == 1) continue;
+        if (d == 0 && n > 1) continue; 
+        countWithoutBad += pow(good_digits.size(), n - 1);
+    }
+
+    return total - countWithoutBad;
+    }
+};
