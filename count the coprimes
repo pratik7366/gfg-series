@@ -1,0 +1,53 @@
+You are given an array arr[] of positive integers. Your task is to count the number of pairs (i, j) such that:
+
+
+0 ≤ i < j ≤ n-1
+gcd(arr[i], arr[j]) = 1
+In other words, count the number of unordered pairs of indices (i, j) where the elements at those positions are co-prime.
+
+
+
+
+
+//c++ code 
+
+class Solution {
+  public:
+    int cntCoprime(vector<int>& arr) {
+   
+        const int MAX = 10001;
+        int n = arr.size();
+
+        vector<int> freq(MAX, 0);
+        for (int x : arr) freq[x]++;
+
+        vector<int> countDivisible(MAX, 0);
+        for (int d = 1; d < MAX; ++d) {
+            for (int mult = d; mult < MAX; mult += d) {
+                countDivisible[d] += freq[mult];
+            }
+        }
+
+        vector<int> mobius(MAX, 1);
+        vector<bool> isPrime(MAX, true);
+        for (int i = 2; i < MAX; ++i) {
+            if (isPrime[i]) {
+                for (int j = i; j < MAX; j += i) {
+                    mobius[j] *= -1;
+                    isPrime[j] = false;
+                }
+                for (int j = i * i; j < MAX; j += i * i) {
+                    mobius[j] = 0;
+                }
+            }
+        }
+
+        long long total = 0;
+        for (int d = 1; d < MAX; ++d) {
+            long long c = countDivisible[d];
+            total += mobius[d] * (c * (c - 1)) / 2;
+        }
+
+        return static_cast<int>(total);   
+    }
+};
